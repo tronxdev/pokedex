@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Popover } from "react-tiny-popover";
 import { useDebouncedCallback } from "use-debounce";
 import { SearchPopover } from "../../../components";
@@ -9,16 +10,28 @@ import {
   InputWrapper,
   Instruction,
 } from "./search.styled";
-import RAW_POKEMONS from "../../../assets/json/pokemons.json";
+
+// redux
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../../redux/store";
+import { addHistory } from "../../../redux/slices/pokedex";
+
 import { INamedApiResource } from "../../../types/api";
+import RAW_POKEMONS from "../../../assets/json/pokemons.json";
 
 const POKEMONS = RAW_POKEMONS.map((p, index) => ({ id: index + 1, ...p }));
 
 export default function Search() {
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+  const { data: searchHistory } = useSelector(
+    (state: RootState) => state.pokedex.searchHistory
+  );
+
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const [candidates, setCandidates] = useState<
-    Array<INamedApiResource & { id: number }>
-  >([]);
+  const [candidates, setCandidates] =
+    useState<Array<INamedApiResource & { id: number }>>(searchHistory);
 
   const handleSearchInputFocus = useCallback(() => {
     setIsPopoverOpen(true);
@@ -30,6 +43,7 @@ export default function Search() {
 
   const handleDebouncedQueryChange = useDebouncedCallback((value: string) => {
     if (!value) {
+      setCandidates(searchHistory);
     } else if (value.length < 3) {
       setCandidates([]);
     } else {
@@ -38,6 +52,14 @@ export default function Search() {
       );
     }
   }, 1000);
+
+  const handleSelect = useCallback(
+    (d: INamedApiResource & { id: number }) => {
+      dispatch(addHistory(d));
+      navigate(`/pokemon/${d.name}`);
+    },
+    [dispatch, navigate]
+  );
 
   return (
     <Wrapper>
@@ -48,14 +70,7 @@ export default function Search() {
           positions={["bottom"]}
           clickOutsideCapture={true}
           onClickOutside={handlePopoverOutsideClick}
-          content={
-            <SearchPopover
-              data={candidates}
-              onSelect={(d) => {
-                console.log(d);
-              }}
-            />
-          }
+          content={<SearchPopover data={candidates} onSelect={handleSelect} />}
         >
           <Input
             onChange={(e) => handleDebouncedQueryChange(e.target.value)}

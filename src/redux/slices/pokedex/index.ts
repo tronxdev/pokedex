@@ -1,28 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { INamedApiResource } from "../../../types/api";
 
-// interface IPokemons {
-//   data: string[];
-//   page: number;
-//   loading: boolean;
-//   error?: Error;
-// }
-
-interface IQuery {
-  data: string;
-  url: string;
-  timestamp: Date;
-}
-
-interface IQueries {
-  data: IQueries[];
+interface ISearchHistory {
+  data: Array<INamedApiResource & { id: number }>;
 }
 
 interface ISliceState {
-  queries: IQueries;
+  searchHistory: ISearchHistory;
 }
 
 const initialState: ISliceState = {
-  queries: {
+  searchHistory: {
     data: [],
   },
 };
@@ -30,10 +18,20 @@ const initialState: ISliceState = {
 export const pokedexSlice = createSlice({
   name: "pokedex",
   initialState,
-  reducers: {},
+  reducers: {
+    addHistory: (
+      state,
+      action: PayloadAction<INamedApiResource & { id: number }>
+    ) => {
+      state.searchHistory.data = [
+        action.payload,
+        ...state.searchHistory.data.filter((d) => d.id !== action.payload.id),
+      ].slice(0, 5);
+    },
+  },
   extraReducers: (builder) => {},
 });
 
-export const {} = pokedexSlice.actions;
+export const { addHistory } = pokedexSlice.actions;
 
 export default pokedexSlice.reducer;
