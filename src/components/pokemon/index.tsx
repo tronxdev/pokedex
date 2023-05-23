@@ -26,7 +26,11 @@ export default function Pokemon({ data, variant }: IPokemonProps) {
         <Name>{data.name.charAt(0).toUpperCase() + data.name.slice(1)}</Name>
         <Types>
           {data.types.map((t) => (
-            <Type key={t.type.name} data={t.type.name as IBaseType} />
+            <Type
+              key={t.type.name}
+              data={t.type.name as IBaseType}
+              variant="mini"
+            />
           ))}
         </Types>
       </Content>

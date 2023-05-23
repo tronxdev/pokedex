@@ -4,12 +4,13 @@ import { IBaseType } from "../../types/pokemon/type";
 
 interface ITypeProps {
   data: IBaseType;
+  variant?: "default" | "mini";
 }
 
-export default function Type({ data }: ITypeProps) {
+export default function Type({ data, variant = "default" }: ITypeProps) {
   return (
-    <Wrapper bg={TYPES[data].bg}>
-      <Text color={TYPES[data].color}>
+    <Wrapper bg={TYPES[data].bg} variant={variant}>
+      <Text color={TYPES[data].color} variant={variant}>
         {data.charAt(0).toUpperCase() + data.slice(1)}
       </Text>
     </Wrapper>

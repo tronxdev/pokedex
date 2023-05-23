@@ -6,6 +6,8 @@ import { IType } from "./type";
 export interface IPokemon {
   id: number;
   name: string;
+  height: number;
+  weight: number;
   abilities: Array<IAbility>;
   moves: Array<IMove>;
   species: INamedApiResource;
