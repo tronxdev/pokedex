@@ -7,4 +7,8 @@ export const GlobalStyle = createGlobalStyle`
         font-weight: 400;
         src: url("../assets/fonts/flexo/flexo-regular.ttf") format('ttf')
     }
+
+    * {
+        margin: 0;
+    }
 `;

@@ -47,7 +47,6 @@ export const Instruction = styled.h2`
   font-family: "Flexo-Regular", arial, sans-serif;
   font-weight: 400;
   font-size: 20px;
-  margin: 0;
   padding: 16px;
   border-radius: 6px;
   background-color: #4dad5b;

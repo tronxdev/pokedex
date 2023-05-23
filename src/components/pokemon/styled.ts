@@ -20,7 +20,6 @@ export const ID = styled.p`
   color: #919191;
   font-size: 12px;
   font-weight: bold;
-  margin: 0;
 `;
 
 export const Name = styled.h5`
