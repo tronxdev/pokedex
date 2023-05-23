@@ -9,17 +9,23 @@ const Pokedex = lazy(() => import("./pages/pokedex"));
 const Pokemon = lazy(() => import("./pages/pokemon"));
 const NotFound = lazy(() => import("./pages/404"));
 
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Pokedex />} />
+      <Route path="/pokedex" element={<Pokedex />} />
+      <Route path="/pokemon/:slug" element={<Pokemon />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
+
 function App() {
   return (
     <>
       <Suspense fallback={<div className="container">Loading...</div>}>
         <Provider store={store}>
-          <Routes>
-            <Route path="/" element={<Pokedex />} />
-            <Route path="/pokedex" element={<Pokedex />} />
-            <Route path="/pokedex/:slug" element={<Pokemon />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AppRoutes />
         </Provider>
       </Suspense>
     </>
