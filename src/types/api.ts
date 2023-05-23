@@ -5,9 +5,9 @@ export interface INamedApiResource {
   url: string;
 }
 
-export interface INamedApiResourceList {
+export interface INamedApiResourceList<T> {
   count: number;
   next: Nullable<string>;
   previous: Nullable<string>;
-  results: Array<INamedApiResource>;
+  results: Array<T>;
 }
