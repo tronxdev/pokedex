@@ -20,6 +20,7 @@ import { INamedApiResource } from "../../../types/api";
 import RAW_POKEMONS from "../../../assets/json/pokemons.json";
 
 const POKEMONS = RAW_POKEMONS.map((p, index) => ({ id: index + 1, ...p }));
+const TOTAL = POKEMONS.length;
 
 export default function Search() {
   const navigate = useNavigate();
@@ -42,14 +43,24 @@ export default function Search() {
   }, []);
 
   const handleDebouncedQueryChange = useDebouncedCallback((value: string) => {
-    if (!value) {
-      setCandidates(searchHistory);
-    } else if (value.length < 3) {
-      setCandidates([]);
+    const id = parseInt(value, 10);
+
+    if (isNaN(id) || !/^0*[1-9]\d*$/.test(value)) {
+      if (!value) {
+        setCandidates(searchHistory);
+      } else if (value.length < 3) {
+        setCandidates([]);
+      } else {
+        setCandidates(
+          POKEMONS.filter((p) => p.name.startsWith(value.toLowerCase()))
+        );
+      }
     } else {
-      setCandidates(
-        POKEMONS.filter((p) => p.name.startsWith(value.toLowerCase()))
-      );
+      if (id > 0 && id <= TOTAL) {
+        setCandidates([POKEMONS[id - 1]]);
+      } else {
+        setCandidates([]);
+      }
     }
   }, 1000);
 

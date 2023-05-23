@@ -19,7 +19,7 @@ export default function Pokemon({ data, variant }: IPokemonProps) {
         ).slice(-3)}.png`;
 
   return (
-    <Wrapper href={`/pokemon/${data.id}`}>
+    <Wrapper href={`/pokemon/${data.name}`}>
       <Img alt={data.name} src={imgUrl} />
       <Content>
         <ID>#{("000" + data.id).slice(-4)}</ID>
