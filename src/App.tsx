@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { lazy, Suspense } from "react";
+import { Routes, Route } from "react-router-dom";
+
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+
+// import NavBar from "./Components/NavBar";
+const Pokedex = lazy(() => import("./pages/pokedex"));
+const Pokemon = lazy(() => import("./pages/pokemon"));
+const NotFound = lazy(() => import("./pages/404"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Suspense fallback={<div className="container">Loading...</div>}>
+        <Provider store={store}>
+          <Routes>
+            <Route path="/" element={<Pokedex />} />
+            <Route path="/pokedex" element={<Pokedex />} />
+            <Route path="/pokedex/:slug" element={<Pokemon />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Provider>
+      </Suspense>
+    </>
   );
 }
 
