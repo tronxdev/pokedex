@@ -2,6 +2,8 @@
 
 This application is a simple Pokédex where you can easily search for a Pokémon by name or number. [Pokédex](https://www.pokemon.com/us/pokedex).
 
+#### [Live Demo](https://pokedex-tronxdev.vercel.app/)
+
 ## Screenshots
 
 ![Search](https://github.com/tronxdev/pokedex/blob/main/screenshots/01.png?raw=true)
