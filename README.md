@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Pokédex
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This application is a simple Pokédex where you can easily search for a Pokémon by name or number. [Pokédex](https://www.pokemon.com/us/pokedex).
 
 ## Available Scripts
 
